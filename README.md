@@ -1,7 +1,3 @@
-#<p align="center">
-#<img src="src/frontend/static/icons/Hipster_HeroLogoMaroon.svg" width="300" alt="Online Boutique" />
-#</p>
-
 
 ![Continuous Integration](https://github.com/GoogleCloudPlatform/microservices-demo/workflows/Continuous%20Integration%20-%20Main/Release/badge.svg)
 
@@ -23,9 +19,9 @@ If you’re using this demo, please **★Star** this repository to show your int
 
 ## Screenshots
 
-| Home Page                                                                                                         | Checkout Screen                                                                                                    |
-| ----------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| [![Screenshot of store homepage](https://github.com/balogsun/microservices-online-retail-store/assets/125329091/598cdfb1-29e1-47e8-bf83-293e679d35d4) | #[![Screenshot of checkout screen](./docs/img/online-boutique-frontend-2.png)](./docs/img/online-boutique-frontend-2.png) |
+| Home Page                                                                                                         
+| ----------------------------------------------------------------------------------------------------------------- 
+| [![Screenshot of store homepage](https://github.com/balogsun/microservices-online-retail-store/assets/125329091/598cdfb1-29e1-47e8-bf83-293e679d35d4)
 
 ## Quickstart (GKE)
 

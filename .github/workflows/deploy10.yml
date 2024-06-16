@@ -7,13 +7,10 @@ on:
 
 jobs:
   build-and-deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     env:
-      SSH_CRED: ${{ secrets.SSH_CRED }}
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       SCANNER_HOME: /usr/local/sonar-scanner
 
     steps:
@@ -124,17 +121,8 @@ jobs:
         with:
           version: 'latest'
 
-      - name: Set up Minikube
-        run: |
-          curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
-          chmod +x minikube
-          sudo mv minikube /usr/local/bin/
-          minikube start
-          minikube status
-          kubectl config use-context minikube
-
       - name: Deploy to Minikube
         run: |
-          kubectl apply -f deployment-service.yml
+          kubectl apply -f release/kubernetes-manifests3
           kubectl get pods
           kubectl get svc

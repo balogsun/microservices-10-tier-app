@@ -1,0 +1,140 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - latest
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    env:
+      SSH_CRED: ${{ secrets.SSH_CRED }}
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      SCANNER_HOME: /usr/local/sonar-scanner
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          repository: balogsun/microservices-online-retail-app
+          ref: latest
+
+      - name: Set up SonarQube
+        uses: sonarsource/sonarcloud-github-action@v1
+        with:
+          projectKey: 10-Tier
+          projectName: 10-Tier
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+      - name: Build and push adservice Docker image
+        run: |
+          cd src/adservice
+          docker build -t balogsun/adservice:latest .
+          echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+          docker push balogsun/adservice:latest
+          docker rmi balogsun/adservice:latest
+
+      - name: Build and push cartservice Docker image
+        run: |
+          cd src/cartservice/src
+          docker build -t balogsun/cartservice:latest .
+          echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+          docker push balogsun/cartservice:latest
+          docker rmi balogsun/cartservice:latest
+
+      - name: Build and push checkoutservice Docker image
+        run: |
+          cd src/checkoutservice
+          docker build -t balogsun/checkoutservice:latest .
+          echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+          docker push balogsun/checkoutservice:latest
+          docker rmi balogsun/checkoutservice:latest
+
+      - name: Build and push currencyservice Docker image
+        run: |
+          cd src/currencyservice
+          docker build -t balogsun/currencyservice:latest .
+          echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+          docker push balogsun/currencyservice:latest
+          docker rmi balogsun/currencyservice:latest
+
+      - name: Build and push emailservice Docker image
+        run: |
+          cd src/emailservice
+          docker build -t balogsun/emailservice:latest .
+          echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+          docker push balogsun/emailservice:latest
+          docker rmi balogsun/emailservice:latest
+
+      - name: Build and push frontend Docker image
+        run: |
+          cd src/frontend
+          docker build -t balogsun/frontend:latest .
+          echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+          docker push balogsun/frontend:latest
+          docker rmi balogsun/frontend:latest
+
+      - name: Build and push loadgenerator Docker image
+        run: |
+          cd src/loadgenerator
+          docker build -t balogsun/loadgenerator:latest .
+          echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+          docker push balogsun/loadgenerator:latest
+          docker rmi balogsun/loadgenerator:latest
+
+      - name: Build and push paymentservice Docker image
+        run: |
+          cd src/paymentservice
+          docker build -t balogsun/paymentservice:latest .
+          echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+          docker push balogsun/paymentservice:latest
+          docker rmi balogsun/paymentservice:latest
+
+      - name: Build and push productcatalogservice Docker image
+        run: |
+          cd src/productcatalogservice
+          docker build -t balogsun/productcatalogservice:latest .
+          echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+          docker push balogsun/productcatalogservice:latest
+          docker rmi balogsun/productcatalogservice:latest
+
+      - name: Build and push recommendationservice Docker image
+        run: |
+          cd src/recommendationservice
+          docker build -t balogsun/recommendationservice:latest .
+          echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+          docker push balogsun/recommendationservice:latest
+          docker rmi balogsun/recommendationservice:latest
+
+      - name: Build and push shippingservice Docker image
+        run: |
+          cd src/shippingservice
+          docker build -t balogsun/shippingservice:latest .
+          echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+          docker push balogsun/shippingservice:latest
+          docker rmi balogsun/shippingservice:latest
+
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v1
+        with:
+          version: 'latest'
+
+      - name: Set up Minikube
+        run: |
+          curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+          chmod +x minikube
+          sudo mv minikube /usr/local/bin/
+          minikube start
+          minikube status
+          kubectl config use-context minikube
+
+      - name: Deploy to Minikube
+        run: |
+          kubectl apply -f deployment-service.yml
+          kubectl get pods
+          kubectl get svc

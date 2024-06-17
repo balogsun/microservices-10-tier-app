@@ -20,14 +20,6 @@ jobs:
           repository: balogsun/microservices-10-tier-app
 #          ref: latest
 
-      - name: Set up SonarQube
-        uses: sonarsource/sonarcloud-github-action@v1
-        with:
-          entryPoint: 'sonar-cloud'
-
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
       - name: Build and push adservice Docker image
         working-directory: src/adservice
         run: |

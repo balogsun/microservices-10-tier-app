@@ -8,10 +8,6 @@ on: [push]
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    env:
-      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-      DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
-      SCANNER_HOME: /usr/local/sonar-scanner
 
     steps:
       - name: Checkout code
@@ -26,90 +22,90 @@ jobs:
       - name: Build and push adservice Docker image
         working-directory: src/adservice
         run: |
-          docker build -t balogsun/adservice:latest .
+          docker build -t balogsen/adservice:latest .
           echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-          docker push balogsun/adservice:latest
-          docker rmi balogsun/adservice:latest
+          docker push balogsen/adservice:latest
+          docker rmi balogsen/adservice:latest
 
       - name: Build and push cartservice Docker image
         working-directory: src/cartservice/src
         run: |
-          docker build -t balogsun/cartservice:latest .
+          docker build -t balogsen/cartservice:latest .
           echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-          docker push balogsun/cartservice:latest
-          docker rmi balogsun/cartservice:latest
+          docker push balogsen/cartservice:latest
+          docker rmi balogsen/cartservice:latest
 
       - name: Build and push checkoutservice Docker image
         working-directory: src/checkoutservice
         run: |
-          docker build -t balogsun/checkoutservice:latest .
+          docker build -t balogsen/checkoutservice:latest .
           echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-          docker push balogsun/checkoutservice:latest
-          docker rmi balogsun/checkoutservice:latest
+          docker push balogsen/checkoutservice:latest
+          docker rmi balogsen/checkoutservice:latest
 
       - name: Build and push currencyservice Docker image
         working-directory: src/currencyservice
         run: |
-          docker build -t balogsun/currencyservice:latest .
+          docker build -t balogsen/currencyservice:latest .
           echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-          docker push balogsun/currencyservice:latest
-          docker rmi balogsun/currencyservice:latest
+          docker push balogsen/currencyservice:latest
+          docker rmi balogsen/currencyservice:latest
 
       - name: Build and push emailservice Docker image
         working-directory: src/emailservice
         run: |
-          docker build -t balogsun/emailservice:latest .
+          docker build -t balogsen/emailservice:latest .
           echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-          docker push balogsun/emailservice:latest
-          docker rmi balogsun/emailservice:latest
+          docker push balogsen/emailservice:latest
+          docker rmi balogsen/emailservice:latest
 
       - name: Build and push frontend Docker image
         working-directory: src/frontend
         run: |
-          docker build -t balogsun/frontend:latest .
+          docker build -t balogsen/frontend:latest .
           echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-          docker push balogsun/frontend:latest
-          docker rmi balogsun/frontend:latest
+          docker push balogsen/frontend:latest
+          docker rmi balogsen/frontend:latest
 
       - name: Build and push loadgenerator Docker image
         working-directory: src/loadgenerator
         run: |
-          docker build -t balogsun/loadgenerator:latest .
+          docker build -t balogsen/loadgenerator:latest .
           echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-          docker push balogsun/loadgenerator:latest
-          docker rmi balogsun/loadgenerator:latest
+          docker push balogsen/loadgenerator:latest
+          docker rmi balogsen/loadgenerator:latest
 
       - name: Build and push paymentservice Docker image
         working-directory: src/paymentservice
         run: |
-          docker build -t balogsun/paymentservice:latest .
+          docker build -t balogsen/paymentservice:latest .
           echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-          docker push balogsun/paymentservice:latest
-          docker rmi balogsun/paymentservice:latest
+          docker push balogsen/paymentservice:latest
+          docker rmi balogsen/paymentservice:latest
 
       - name: Build and push productcatalogservice Docker image
         working-directory: src/productcatalogservice
         run: |
-          docker build -t balogsun/productcatalogservice:latest .
+          docker build -t balogsen/productcatalogservice:latest .
           echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-          docker push balogsun/productcatalogservice:latest
-          docker rmi balogsun/productcatalogservice:latest
+          docker push balogsen/productcatalogservice:latest
+          docker rmi balogsen/productcatalogservice:latest
 
       - name: Build and push recommendationservice Docker image
         working-directory: src/recommendationservice
         run: |
-          docker build -t balogsun/recommendationservice:latest .
+          docker build -t balogsen/recommendationservice:latest .
           echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-          docker push balogsun/recommendationservice:latest
-          docker rmi balogsun/recommendationservice:latest
+          docker push balogsen/recommendationservice:latest
+          docker rmi balogsen/recommendationservice:latest
 
       - name: Build and push shippingservice Docker image
         working-directory: src/shippingservice
         run: |
-          docker build -t balogsun/shippingservice:latest .
+          docker build -t balogsen/shippingservice:latest .
           echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-          docker push balogsun/shippingservice:latest
-          docker rmi balogsun/shippingservice:latest
+          docker push balogsen/shippingservice:latest
+          docker rmi balogsen/shippingservice:latest
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -118,11 +114,11 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ca-central-1 # Change to your region
 
-      - name: Update kubeconfig for EKS
+	  - name: Update kubeconfig for EKS
         run: |
-          aws eks update-kubeconfig --region ca-central-1 --name pjct-cluster
-#         aws eks update-kubeconfig --name pjct-cluster --region $AWS_REGION --kubeconfig $KUBE_CONFIG_FILE
-#      with:
+		  aws eks update-kubeconfig --region ca-central-1 --name pjct-cluster
+#		  aws eks update-kubeconfig --name pjct-cluster --region $AWS_REGION --kubeconfig $KUBE_CONFIG_FILE
+#       with:
 #         cluster-name: pjct-cluster # Replace with your EKS cluster name
 #         role-to-assume: arn:aws:iam::570580688935:role/pjct-cluster # Replace with your IAM role ARN
 

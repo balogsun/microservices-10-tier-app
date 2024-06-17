@@ -15,88 +15,93 @@ jobs:
         with:
           repository: balogsun/microservices-10-tier-app
 
-      - name: Docker login
-        run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+#      - name: Docker login
+#        run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+#
+#      - name: Build and push adservice Docker image
+#        working-directory: src/adservice
+#        run: |
+#          docker build -t balogsen/adservice:latest .
+#          docker push balogsen/adservice:latest
+#          docker rmi balogsen/adservice:latest
+#
+#      - name: Build and push cartservice Docker image
+#        working-directory: src/cartservice/src
+#        run: |
+#          docker build -t balogsen/cartservice:latest .
+#          docker push balogsen/cartservice:latest
+#          docker rmi balogsen/cartservice:latest
+#
+#      - name: Build and push checkoutservice Docker image
+#        working-directory: src/checkoutservice
+#        run: |
+#          docker build -t balogsen/checkoutservice:latest .
+#          docker push balogsen/checkoutservice:latest
+#          docker rmi balogsen/checkoutservice:latest
+#
+#      - name: Build and push currencyservice Docker image
+#        working-directory: src/currencyservice
+#        run: |
+#          docker build -t balogsen/currencyservice:latest .
+#          docker push balogsen/currencyservice:latest
+#          docker rmi balogsen/currencyservice:latest
+#
+#      - name: Build and push emailservice Docker image
+#        working-directory: src/emailservice
+#        run: |
+#          docker build -t balogsen/emailservice:latest .
+#          docker push balogsen/emailservice:latest
+#          docker rmi balogsen/emailservice:latest
+#
+#      - name: Build and push frontend Docker image
+#        working-directory: src/frontend
+#        run: |
+#          docker build -t balogsen/frontend:latest .
+#          docker push balogsen/frontend:latest
+#          docker rmi balogsen/frontend:latest
+#
+#      - name: Build and push loadgenerator Docker image
+#        working-directory: src/loadgenerator
+#        run: |
+#          docker build -t balogsen/loadgenerator:latest .
+#          docker push balogsen/loadgenerator:latest
+#          docker rmi balogsen/loadgenerator:latest
+#
+#      - name: Build and push paymentservice Docker image
+#        working-directory: src/paymentservice
+#        run: |
+#          docker build -t balogsen/paymentservice:latest .
+#          docker push balogsen/paymentservice:latest
+#          docker rmi balogsen/paymentservice:latest
+#
+#      - name: Build and push productcatalogservice Docker image
+#        working-directory: src/productcatalogservice
+#        run: |
+#          docker build -t balogsen/productcatalogservice:latest .
+#          docker push balogsen/productcatalogservice:latest
+#          docker rmi balogsen/productcatalogservice:latest
+#
+#      - name: Build and push recommendationservice Docker image
+#        working-directory: src/recommendationservice
+#        run: |
+#          docker build -t balogsen/recommendationservice:latest .
+#          docker push balogsen/recommendationservice:latest
+#          docker rmi balogsen/recommendationservice:latest
+#
+#      - name: Build and push shippingservice Docker image
+#        working-directory: src/shippingservice
+#        run: |
+#          docker build -t balogsen/shippingservice:latest .
+#          docker push balogsen/shippingservice:latest
+#          docker rmi balogsen/shippingservice:latest
 
-      - name: Build and push adservice Docker image
-        working-directory: src/adservice
-        run: |
-          docker build -t balogsen/adservice:latest .
-          docker push balogsen/adservice:latest
-          docker rmi balogsen/adservice:latest
-
-      - name: Build and push cartservice Docker image
-        working-directory: src/cartservice/src
-        run: |
-          docker build -t balogsen/cartservice:latest .
-          docker push balogsen/cartservice:latest
-          docker rmi balogsen/cartservice:latest
-
-      - name: Build and push checkoutservice Docker image
-        working-directory: src/checkoutservice
-        run: |
-          docker build -t balogsen/checkoutservice:latest .
-          docker push balogsen/checkoutservice:latest
-          docker rmi balogsen/checkoutservice:latest
-
-      - name: Build and push currencyservice Docker image
-        working-directory: src/currencyservice
-        run: |
-          docker build -t balogsen/currencyservice:latest .
-          docker push balogsen/currencyservice:latest
-          docker rmi balogsen/currencyservice:latest
-
-      - name: Build and push emailservice Docker image
-        working-directory: src/emailservice
-        run: |
-          docker build -t balogsen/emailservice:latest .
-          docker push balogsen/emailservice:latest
-          docker rmi balogsen/emailservice:latest
-
-      - name: Build and push frontend Docker image
-        working-directory: src/frontend
-        run: |
-          docker build -t balogsen/frontend:latest .
-          docker push balogsen/frontend:latest
-          docker rmi balogsen/frontend:latest
-
-      - name: Build and push loadgenerator Docker image
-        working-directory: src/loadgenerator
-        run: |
-          docker build -t balogsen/loadgenerator:latest .
-          docker push balogsen/loadgenerator:latest
-          docker rmi balogsen/loadgenerator:latest
-
-      - name: Build and push paymentservice Docker image
-        working-directory: src/paymentservice
-        run: |
-          docker build -t balogsen/paymentservice:latest .
-          docker push balogsen/paymentservice:latest
-          docker rmi balogsen/paymentservice:latest
-
-      - name: Build and push productcatalogservice Docker image
-        working-directory: src/productcatalogservice
-        run: |
-          docker build -t balogsen/productcatalogservice:latest .
-          docker push balogsen/productcatalogservice:latest
-          docker rmi balogsen/productcatalogservice:latest
-
-      - name: Build and push recommendationservice Docker image
-        working-directory: src/recommendationservice
-        run: |
-          docker build -t balogsen/recommendationservice:latest .
-          docker push balogsen/recommendationservice:latest
-          docker rmi balogsen/recommendationservice:latest
-
-      - name: Build and push shippingservice Docker image
-        working-directory: src/shippingservice
-        run: |
-          docker build -t balogsen/shippingservice:latest .
-          docker push balogsen/shippingservice:latest
-          docker rmi balogsen/shippingservice:latest
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v3
+        with:
+          version: 'latest'
 
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v3
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -106,7 +111,8 @@ jobs:
         run: |
           aws eks update-kubeconfig --region ca-central-1 --name pjct-cluster
 
-      - name: Set up kubectl
-        uses: azure/setup-kubectl@v1
-        with:
-          version: 'latest'
+      - name: Deploy to EKS
+        run: |
+          kubectl apply -f release/kubernetes-manifests4
+          kubectl get pods
+          kubectl get svc

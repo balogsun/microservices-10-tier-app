@@ -121,15 +121,19 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-west-2 # Change to your region
+          aws-region: ca-central-1 # Change to your region
 
       - name: Set up kubectl
-        uses: aws-actions/setup-eks-kubectl@v1
+        uses: actions/setup-kubectl@v1
         with:
           version: 'latest'
-          cluster-name: pjct-cluster # Change to your EKS cluster name
+		  
+      - name: Update kubeconfig for EKS
+        uses: aws-actions/eks-setup-kubectl@v1
+        with:
+          cluster-name: pjct-cluster # Replace with your EKS cluster name
           role-to-assume: arn:aws:iam::570580688935:role/pjct-cluster # Change to your IAM role ARN
-
+	  
       - name: Deploy to EKS
         run: |
           kubectl apply -f release/kubernetes-manifests4

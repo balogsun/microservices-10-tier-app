@@ -124,10 +124,12 @@ jobs:
           aws-region: ca-central-1 # Change to your region
 
       - name: Update kubeconfig for EKS
-        uses: aws-actions/eks-update-kubeconfig@v3
-        with:
-          cluster-name: pjct-cluster # Replace with your EKS cluster name
-          role-to-assume: arn:aws:iam::570580688935:role/pjct-cluster # Replace with your IAM role ARN
+        run: |
+		      aws eks update-kubeconfig --region ca-central-1 --name pjct-cluster
+#		      aws eks update-kubeconfig --name pjct-cluster --region $AWS_REGION --kubeconfig $KUBE_CONFIG_FILE
+#      with:
+#         cluster-name: pjct-cluster # Replace with your EKS cluster name
+#         role-to-assume: arn:aws:iam::570580688935:role/pjct-cluster # Replace with your IAM role ARN
 
       - name: Set up kubectl
         uses: azure/setup-kubectl@v1

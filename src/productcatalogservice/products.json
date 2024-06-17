@@ -3,10 +3,10 @@
         {
             "id": "OLJCESPC7Z",
             "name": "Sunglasses",
-            "description": "Add a modern touch to your outfits with these sleek aviator sunglasses.",
+            "description": "Seun's sunglasses.",
             "picture": "/static/img/products/sunglasses.jpg",
             "priceUsd": {
-                "currencyCode": "USD",
+                "currencyCode": "CAD",
                 "units": 19,
                 "nanos": 990000000
             },
@@ -15,9 +15,9 @@
         {
             "id": "66VCHSJNUP",
             "name": "Tank Top",
-            "description": "Perfectly cropped cotton tank, with a scooped neckline.",
+            "description": "Black Tank Top.",
             "picture": "/static/img/products/tank-top.jpg",
-            "priceUsd": {
+            "priceUsd": CAD
                 "currencyCode": "USD",
                 "units": 18,
                 "nanos": 990000000
@@ -27,10 +27,10 @@
         {
             "id": "1YMWWN1N4O",
             "name": "Watch",
-            "description": "This gold-tone stainless steel watch will work with most of your outfits.",
+            "description": "Seun's Amazfit Smart watch will work with all of your outfits.",
             "picture": "/static/img/products/watch.jpg",
             "priceUsd": {
-                "currencyCode": "USD",
+                "currencyCode": "CAD",
                 "units": 109,
                 "nanos": 990000000
             },

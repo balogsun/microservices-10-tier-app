@@ -12,30 +12,29 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# https://mcr.microsoft.com/product/dotnet/sdk
-FROM mcr.microsoft.com/dotnet/sdk:8.0.302-noble@sha256:fa69db4553830bd5c28d701867796bf5939988c74d70284774c628a8a4361442 as builder
+# https://mcr.microsoft.com/v2/dotnet/sdk/tags/list
+FROM mcr.microsoft.com/dotnet/sdk:7.0.101@sha256:7864257426b137231c0cf13cee1261c2b029f879ebcacea077de631404ba6447 as builder
 WORKDIR /app
 COPY cartservice.csproj .
-RUN dotnet restore cartservice.csproj \
-    -r linux-x64
+RUN dotnet restore cartservice.csproj -r linux-musl-x64
 COPY . .
-RUN dotnet publish cartservice.csproj \
-    -p:PublishSingleFile=true \
-    -r linux-x64 \
-    --self-contained true \
-    -p:PublishTrimmed=True \
-    -p:TrimMode=Full \
-    -c release \
-    -o /cartservice \
-    --no-restore
+RUN dotnet publish cartservice.csproj -p:PublishSingleFile=true -r linux-musl-x64 --self-contained true -p:PublishTrimmed=True -p:TrimMode=Link -c release -o /cartservice --no-restore
 
-# https://mcr.microsoft.com/product/dotnet/runtime-deps
-FROM mcr.microsoft.com/dotnet/runtime-deps:8.0.6-noble-chiseled@sha256:1745aa8e322b6965ea3ec8524b9f9eb128f146c804e32b1fc2272ed07ada4c8e
+# https://mcr.microsoft.com/v2/dotnet/runtime-deps/tags/list
+FROM mcr.microsoft.com/dotnet/runtime-deps:7.0.1-alpine3.16-amd64@sha256:3674a509a2735aaaeef7ba9438d8fc0ba02d0b303fbeaf8b1a27669f08327f1b as without-grpc-health-probe-bin
 
 WORKDIR /app
 COPY --from=builder /cartservice .
 EXPOSE 7070
 ENV DOTNET_EnableDiagnostics=0 \
-    ASPNETCORE_HTTP_PORTS=7070
+    ASPNETCORE_URLS=http://*:7070
 USER 1000
 ENTRYPOINT ["/app/cartservice"]
+
+FROM without-grpc-health-probe-bin
+USER root
+# renovate: datasource=github-releases depName=grpc-ecosystem/grpc-health-probe
+RUN GRPC_HEALTH_PROBE_VERSION=v0.4.14 && \
+    wget -qO/bin/grpc_health_probe https://github.com/grpc-ecosystem/grpc-health-probe/releases/download/${GRPC_HEALTH_PROBE_VERSION}/grpc_health_probe-linux-amd64 && \
+    chmod +x /bin/grpc_health_probe
+USER 1000

@@ -15,10 +15,10 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: balogsun/microservices-10-tier-app
-          ref: latest
+#          ref: latest
 
       - name: Set up SonarQube
         uses: sonarsource/sonarcloud-github-action@v1

@@ -20,6 +20,9 @@ jobs:
           repository: balogsun/microservices-10-tier-app
 #          ref: latest
 
+      - name: Docker login
+        run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+
       - name: Build and push adservice Docker image
         working-directory: src/adservice
         run: |

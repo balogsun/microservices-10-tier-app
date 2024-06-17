@@ -125,8 +125,8 @@ jobs:
 
       - name: Update kubeconfig for EKS
         run: |
-		      aws eks update-kubeconfig --region ca-central-1 --name pjct-cluster
-#		      aws eks update-kubeconfig --name pjct-cluster --region $AWS_REGION --kubeconfig $KUBE_CONFIG_FILE
+          aws eks update-kubeconfig --region ca-central-1 --name pjct-cluster
+#         aws eks update-kubeconfig --name pjct-cluster --region $AWS_REGION --kubeconfig $KUBE_CONFIG_FILE
 #      with:
 #         cluster-name: pjct-cluster # Replace with your EKS cluster name
 #         role-to-assume: arn:aws:iam::570580688935:role/pjct-cluster # Replace with your IAM role ARN

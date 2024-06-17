@@ -29,88 +29,88 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       - name: Build and push adservice Docker image
+        working-directory: src/adservice
         run: |
-          cd src/adservice
           docker build -t balogsun/adservice:latest .
           echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
           docker push balogsun/adservice:latest
           docker rmi balogsun/adservice:latest
 
       - name: Build and push cartservice Docker image
+        working-directory: src/cartservice/src
         run: |
-          cd src/cartservice/src
           docker build -t balogsun/cartservice:latest .
           echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
           docker push balogsun/cartservice:latest
           docker rmi balogsun/cartservice:latest
 
       - name: Build and push checkoutservice Docker image
+        working-directory: src/checkoutservice
         run: |
-          cd src/checkoutservice
           docker build -t balogsun/checkoutservice:latest .
           echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
           docker push balogsun/checkoutservice:latest
           docker rmi balogsun/checkoutservice:latest
 
       - name: Build and push currencyservice Docker image
+        working-directory: src/currencyservice
         run: |
-          cd src/currencyservice
           docker build -t balogsun/currencyservice:latest .
           echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
           docker push balogsun/currencyservice:latest
           docker rmi balogsun/currencyservice:latest
 
       - name: Build and push emailservice Docker image
+        working-directory: src/emailservice
         run: |
-          cd src/emailservice
           docker build -t balogsun/emailservice:latest .
           echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
           docker push balogsun/emailservice:latest
           docker rmi balogsun/emailservice:latest
 
       - name: Build and push frontend Docker image
+        working-directory: src/frontend
         run: |
-          cd src/frontend
           docker build -t balogsun/frontend:latest .
           echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
           docker push balogsun/frontend:latest
           docker rmi balogsun/frontend:latest
 
       - name: Build and push loadgenerator Docker image
+        working-directory: src/loadgenerator
         run: |
-          cd src/loadgenerator
           docker build -t balogsun/loadgenerator:latest .
           echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
           docker push balogsun/loadgenerator:latest
           docker rmi balogsun/loadgenerator:latest
 
       - name: Build and push paymentservice Docker image
+        working-directory: src/paymentservice
         run: |
-          cd src/paymentservice
           docker build -t balogsun/paymentservice:latest .
           echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
           docker push balogsun/paymentservice:latest
           docker rmi balogsun/paymentservice:latest
 
       - name: Build and push productcatalogservice Docker image
+        working-directory: src/productcatalogservice
         run: |
-          cd src/productcatalogservice
           docker build -t balogsun/productcatalogservice:latest .
           echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
           docker push balogsun/productcatalogservice:latest
           docker rmi balogsun/productcatalogservice:latest
 
       - name: Build and push recommendationservice Docker image
+        working-directory: src/recommendationservice
         run: |
-          cd src/recommendationservice
           docker build -t balogsun/recommendationservice:latest .
           echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
           docker push balogsun/recommendationservice:latest
           docker rmi balogsun/recommendationservice:latest
 
       - name: Build and push shippingservice Docker image
+        working-directory: src/shippingservice
         run: |
-          cd src/shippingservice
           docker build -t balogsun/shippingservice:latest .
           echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
           docker push balogsun/shippingservice:latest

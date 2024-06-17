@@ -115,7 +115,7 @@ jobs:
           aws-region: ca-central-1 # Change to your region
 
       - name: Update kubeconfig for EKS
-        run: |
+	run: |
 	   aws eks update-kubeconfig --region ca-central-1 --name pjct-cluster
 #          aws eks update-kubeconfig --name pjct-cluster --region $AWS_REGION --kubeconfig $KUBE_CONFIG_FILE
 #       with:

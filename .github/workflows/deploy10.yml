@@ -23,8 +23,8 @@ jobs:
       - name: Set up SonarQube
         uses: sonarsource/sonarcloud-github-action@v1
         with:
-          projectKey: 10-Tier
-          projectName: 10-Tier
+          entryPoint: 'sonar-cloud'
+
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 

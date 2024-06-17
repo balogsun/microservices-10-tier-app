@@ -127,7 +127,6 @@ jobs:
         uses: actions/setup-kubectl@v1
         with:
           version: 'latest'
-		  
       - name: Update kubeconfig for EKS
         uses: aws-actions/eks-setup-kubectl@v1
         with:

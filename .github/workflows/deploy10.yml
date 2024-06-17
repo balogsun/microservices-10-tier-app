@@ -1,9 +1,9 @@
 name: CI/CD Pipeline
 
-on:
-  push:
-    branches:
-      - latest
+on: [push]
+#  push:
+#    branches:
+#      - latest
 
 jobs:
   build-and-deploy:
